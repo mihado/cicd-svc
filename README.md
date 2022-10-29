@@ -6,6 +6,10 @@
 * https://www.funtoo.org/Funtoo:Keychain
 * https://github.com/direnv/direnv/blob/master/docs/installation.md#from-binary-builds
 
+```sh
+# for postgres
+dnf -y install epel-release
+```
 
 ### DroneCI
 

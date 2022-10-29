@@ -5,7 +5,8 @@ services:
     image: drone/drone:2
     container_name: drone-server
     restart: unless-stopped
-
+    networks:
+      - default
     environment:
       - "DRONE_GITHUB_CLIENT_ID=${DRONE_GITHUB_CLIENT_ID:?err}"
       - "DRONE_GITHUB_CLIENT_SECRET=${DRONE_GITHUB_CLIENT_SECRET:?err}"
@@ -13,28 +14,32 @@ services:
       - "DRONE_SERVER_HOST=${DRONE_SERVER_HOST:?err}"
       - "DRONE_SERVER_PROTO=${DRONE_SERVER_PROTO:?err}"
       - "DRONE_USER_FILTER=${DRONE_USER_FILTER:?err}"
-
+      - "DRONE_DATABASE_DRIVER=${DRONE_DATABASE_DRIVER:?err}"
+      - "DRONE_DATABASE_DATASOURCE=${DRONE_DATABASE_DATASOURCE:?err}"
     ports:
       - 80:80
       - 443:443
-
     volumes:
-      - /var/lib/drone:$HOME/svc/.data
+      - $HOME/svc/.data/drone:/var/lib/drone
 
   runner:
     image: drone/drone-runner-docker:1
     container_name: drone-runner
     restart: unless-stopped
-
+    networks:
+      - default
     environment:
       - "DRONE_RPC_PROTO=${DRONE_RPC_PROTO:?err}"
       - "DRONE_RPC_HOST=${DRONE_RPC_HOST:?err}"
       - "DRONE_RPC_SECRET=${DRONE_RPC_SECRET:?err}"
       - "DRONE_RUNNER_CAPACITY=${DRONE_RUNNER_CAPACITY:?err}"
       - "DRONE_RUNNER_NAME=${DRONE_RUNNER_NAME:?err}"
-
     ports:
       - 3000:3000
-
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  default:
+    name: cicd
+    external: true
