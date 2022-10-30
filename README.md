@@ -14,15 +14,19 @@ dnf -y install epel-release
 ### DroneCI
 
 * https://docs.drone.io/server/user/registration/
+* https://docs.drone.io/server/user/admin/
+* https://docs.drone.io/cli/install/
+
 ```
 DRONE_USER_FILTER=
-```
-
-* https://docs.drone.io/server/storage/encryption/
-```sh
-openssl rand -hex 16
-DRONE_DATABASE_SECRET=
+DRONE_USER_CREATE= (for admins)
 ```
 
 * https://docs.drone.io/server/storage/database/
 * https://docs.drone.io/server/storage/blob/
+* https://docs.drone.io/server/storage/encryption/
+
+```sh
+openssl rand -hex 16
+DRONE_DATABASE_SECRET=
+```
